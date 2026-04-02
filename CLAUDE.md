@@ -20,8 +20,10 @@ This applies to all code — new files, edits to existing files, and inline snip
 
 | File | Covers |
 |------|--------|
-| [`docs/ui.md`](docs/ui.md) | UI standards — component library (shadcn/ui), styling rules, how to build all UI |
-| [`docs/data-fetching.md`](docs/data-fetching.md) | Data fetching — Server Components only, `/data` helper functions, Drizzle ORM, user data scoping |
+| [`docs/ui.md`](docs/ui.md) | UI standards — shadcn/ui components only (no custom components), date formatting with date-fns using `do MMM yyyy` |
+| [`docs/data-fetching.md`](docs/data-fetching.md) | Data fetching — Server Components only, all queries in `/data` helper functions, Drizzle ORM (no raw SQL), every query scoped to authenticated userId |
+| [`docs/data-mutations.md`](docs/data-mutations.md) | Data mutations — Server Actions only (no API routes), colocated `actions.ts` files, typed params (no FormData), Zod validation, all mutations in `/data` helpers scoped to authenticated userId |
+| [`docs/auth.md`](docs/auth.md) | Authentication — Clerk is the only auth provider, get userId via `auth()` server-side, protect routes via middleware, use Clerk UI components, never expose secret key client-side |
 
 ## Commands
 
