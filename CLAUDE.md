@@ -6,9 +6,22 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## IMPORTANT: Docs-First Rule
 
-**Before writing any code, always check the `/docs` directory for a relevant guide.**
+**Before writing ANY code, you MUST first read every relevant file in the `/docs` directory.**
 
-If a `/docs` file covers the feature, component, or pattern you are about to implement, you MUST read it first and follow its guidance. Only proceed with implementation after consulting any applicable docs.
+This is a hard requirement — not a suggestion. For every piece of code you generate:
+
+1. Review the docs index below and identify every doc relevant to what you are about to implement.
+2. Read each relevant doc in full before writing a single line of code.
+3. Follow the guidance in those docs exactly. Do not deviate from the patterns and rules they define.
+
+This applies to all code — new files, edits to existing files, and inline snippets.
+
+### Available Docs
+
+| File | Covers |
+|------|--------|
+| [`docs/ui.md`](docs/ui.md) | UI standards — component library (shadcn/ui), styling rules, how to build all UI |
+| [`docs/data-fetching.md`](docs/data-fetching.md) | Data fetching — Server Components only, `/data` helper functions, Drizzle ORM, user data scoping |
 
 ## Commands
 
