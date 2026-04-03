@@ -24,6 +24,8 @@ This applies to all code — new files, edits to existing files, and inline snip
 | [`docs/data-fetching.md`](docs/data-fetching.md) | Data fetching — Server Components only, all queries in `/data` helper functions, Drizzle ORM (no raw SQL), every query scoped to authenticated userId |
 | [`docs/data-mutations.md`](docs/data-mutations.md) | Data mutations — Server Actions only (no API routes), colocated `actions.ts` files, typed params (no FormData), Zod validation, all mutations in `/data` helpers scoped to authenticated userId |
 | [`docs/auth.md`](docs/auth.md) | Authentication — Clerk is the only auth provider, get userId via `auth()` server-side, protect routes via middleware, use Clerk UI components, never expose secret key client-side |
+| [`docs/server-components.md`](docs/server-components.md) | Server Components — `params` and `searchParams` are Promises in Next.js 15 and must be awaited before accessing properties |
+| [`docs/routing.md`](docs/routing.md) | Routing — all app routes under `/dashboard`, protected via Clerk middleware, no manual auth checks in page components |
 
 ## Commands
 

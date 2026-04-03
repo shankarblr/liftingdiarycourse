@@ -55,6 +55,34 @@ export async function getWorkoutsForDate(date: Date) {
   return Array.from(workoutMap.values());
 }
 
+export async function getWorkoutById(workoutId: string) {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthenticated");
+
+  const result = await db
+    .select()
+    .from(workouts)
+    .where(and(eq(workouts.id, workoutId), eq(workouts.userId, userId)));
+
+  return result[0] ?? null;
+}
+
+export async function updateWorkout(
+  workoutId: string,
+  name: string,
+  startedAt: Date
+) {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthenticated");
+
+  const [workout] = await db
+    .update(workouts)
+    .set({ name, startedAt })
+    .where(and(eq(workouts.id, workoutId), eq(workouts.userId, userId)))
+    .returning();
+  return workout;
+}
+
 export async function createWorkout(name: string, startedAt: Date) {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthenticated");
