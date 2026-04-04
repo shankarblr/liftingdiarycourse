@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
+import Link from "next/link";
 
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -24,9 +26,14 @@ export default async function WorkoutDetailPage({
 
   return (
     <div className="container mx-auto max-w-2xl py-10 px-4">
-      <h1 className="text-3xl font-bold mb-2">
-        {workout.name ?? "Untitled Workout"}
-      </h1>
+      <div className="flex items-center justify-between mb-2">
+        <h1 className="text-3xl font-bold">
+          {workout.name ?? "Untitled Workout"}
+        </h1>
+        <Button asChild variant="outline">
+          <Link href={`/dashboard/workout/${workoutid}/edit`}>Edit</Link>
+        </Button>
+      </div>
       {workout.startedAt && (
         <p className="text-muted-foreground mb-8">
           {format(workout.startedAt, "do MMM yyyy")}

@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import Link from "next/link";
 
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -25,7 +26,12 @@ export default async function DashboardPage({
 
   return (
     <div className="container mx-auto max-w-2xl py-10 px-4">
-      <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-3xl font-bold">Dashboard</h1>
+        <Button asChild>
+          <Link href="/dashboard/workout/new">Log New Workout</Link>
+        </Button>
+      </div>
 
       {/* Date Picker */}
       <div className="mb-8">
