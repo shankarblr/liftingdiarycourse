@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import Link from "next/link";
 
 import {
   Card,
@@ -48,26 +49,28 @@ export default async function DashboardPage({
           </Card>
         ) : (
           workouts.map((workout) => (
-            <Card key={workout.id}>
-              <CardHeader>
-                <CardTitle>{workout.name ?? "Untitled Workout"}</CardTitle>
-                {workout.startedAt && workout.completedAt && (
-                  <CardDescription>
-                    {format(workout.startedAt, "h:mm a")} –{" "}
-                    {format(workout.completedAt, "h:mm a")}
-                  </CardDescription>
+            <Link key={workout.id} href={`/dashboard/workout/${workout.id}`} className="block">
+              <Card className="hover:bg-accent transition-colors cursor-pointer">
+                <CardHeader>
+                  <CardTitle>{workout.name ?? "Untitled Workout"}</CardTitle>
+                  {workout.startedAt && workout.completedAt && (
+                    <CardDescription>
+                      {format(workout.startedAt, "h:mm a")} –{" "}
+                      {format(workout.completedAt, "h:mm a")}
+                    </CardDescription>
+                  )}
+                </CardHeader>
+                {workout.exerciseNames.length > 0 && (
+                  <CardContent>
+                    <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
+                      {workout.exerciseNames.map((name) => (
+                        <li key={name}>{name}</li>
+                      ))}
+                    </ul>
+                  </CardContent>
                 )}
-              </CardHeader>
-              {workout.exerciseNames.length > 0 && (
-                <CardContent>
-                  <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-                    {workout.exerciseNames.map((name) => (
-                      <li key={name}>{name}</li>
-                    ))}
-                  </ul>
-                </CardContent>
-              )}
-            </Card>
+              </Card>
+            </Link>
           ))
         )}
       </div>
