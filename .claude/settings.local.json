@@ -9,7 +9,10 @@
       "Bash(npx shadcn@latest add calendar popover card --yes)",
       "Bash(node -e \"require\\('date-fns'\\)\")",
       "Bash(npm run:*)",
-      "Bash(npx shadcn@latest add input label --yes)"
+      "Bash(npx shadcn@latest add input label --yes)",
+      "Bash(gh repo:*)",
+      "Bash(gh api:*)",
+      "Bash(gh secret:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
