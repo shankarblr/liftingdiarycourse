@@ -49,7 +49,7 @@ export default async function DashboardPage({
           </Card>
         ) : (
           workouts.map((workout) => (
-            <Link key={workout.id} href={`/dashboard/workout/${workout.id}`}>
+            <Link key={workout.id} href={`/dashboard/workout/${workout.id}`} className="block">
               <Card className="hover:bg-accent transition-colors cursor-pointer">
                 <CardHeader>
                   <CardTitle>{workout.name ?? "Untitled Workout"}</CardTitle>
