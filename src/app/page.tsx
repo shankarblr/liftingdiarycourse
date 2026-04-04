@@ -11,7 +11,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="flex flex-col flex-1 bg-white dark:bg-zinc-950">
+    <div className="flex flex-col flex-1 bg-blue-50 dark:bg-zinc-950">
       {/* Hero */}
       <section className="flex flex-col items-center justify-center gap-8 px-6 py-24 text-center">
         <div className="flex flex-col items-center gap-4 max-w-2xl">
