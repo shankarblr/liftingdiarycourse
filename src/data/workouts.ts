@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { db } from "@/db";
-import { workouts, workoutExercises, exercises } from "@/db/schema";
+import { workouts, workoutExercises, exercises, sets } from "@/db/schema";
 import { eq, and, gte, lt } from "drizzle-orm";
 
 export async function getWorkoutsForDate(date: Date) {
@@ -53,4 +53,74 @@ export async function getWorkoutsForDate(date: Date) {
   }
 
   return Array.from(workoutMap.values());
+}
+
+export async function getWorkoutById(workoutId: string) {
+  const { userId } = await auth();
+  if (!userId) return null;
+
+  const rows = await db
+    .select({
+      workoutId: workouts.id,
+      workoutName: workouts.name,
+      startedAt: workouts.startedAt,
+      completedAt: workouts.completedAt,
+      workoutExerciseId: workoutExercises.id,
+      orderIndex: workoutExercises.orderIndex,
+      exerciseName: exercises.name,
+      setId: sets.id,
+      setNumber: sets.setNumber,
+      reps: sets.reps,
+      weightLbs: sets.weightLbs,
+    })
+    .from(workouts)
+    .leftJoin(workoutExercises, eq(workoutExercises.workoutId, workouts.id))
+    .leftJoin(exercises, eq(exercises.id, workoutExercises.exerciseId))
+    .leftJoin(sets, eq(sets.workoutExerciseId, workoutExercises.id))
+    .where(and(eq(workouts.id, workoutId), eq(workouts.userId, userId)));
+
+  if (rows.length === 0) return null;
+
+  const first = rows[0];
+  const exerciseMap = new Map<
+    string,
+    {
+      workoutExerciseId: string;
+      name: string;
+      orderIndex: number;
+      sets: { id: string; setNumber: number; reps: number | null; weightLbs: string | null }[];
+    }
+  >();
+
+  for (const row of rows) {
+    if (!row.workoutExerciseId || !row.exerciseName) continue;
+    if (!exerciseMap.has(row.workoutExerciseId)) {
+      exerciseMap.set(row.workoutExerciseId, {
+        workoutExerciseId: row.workoutExerciseId,
+        name: row.exerciseName,
+        orderIndex: row.orderIndex ?? 0,
+        sets: [],
+      });
+    }
+    if (row.setId) {
+      exerciseMap.get(row.workoutExerciseId)!.sets.push({
+        id: row.setId,
+        setNumber: row.setNumber!,
+        reps: row.reps,
+        weightLbs: row.weightLbs,
+      });
+    }
+  }
+
+  const exerciseList = Array.from(exerciseMap.values()).sort(
+    (a, b) => a.orderIndex - b.orderIndex
+  );
+
+  return {
+    id: first.workoutId,
+    name: first.workoutName,
+    startedAt: first.startedAt,
+    completedAt: first.completedAt,
+    exercises: exerciseList,
+  };
 }
